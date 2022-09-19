@@ -1,0 +1,70 @@
+// Assignment 1: Doubly Linked Lists
+#include<bits/stdc++.h>
+using namespace std;
+
+// Creating a node
+class Node{
+public:
+    string name;
+    int age;
+// previous and next pointers   
+    Node* prev;
+    Node* next;
+// declaring a constructor to construct a new node
+    Node(string x,int a){
+        name = x;
+        age = a;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
+// making a function for adding elements in the list
+void pushBack(Node*& head,Node*& current){
+    if(head==NULL){
+        head = current;
+        return;
+    }
+    Node* temp = head;
+    // traverse the node untill it reaches last node
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+    temp->next = current;
+    current->prev = temp;
+    return;
+}
+
+// Function to print the entire list
+void printFam(Node* head){
+    while(head!=NULL){
+        // Display data of current node of list and traverse forward
+        cout<<head->name<<" "<<head->age<<endl;
+        head = head->next;
+    }
+    return;
+}
+
+// Main function
+int main(){
+// initialise head pointer with NULL
+    Node* head = NULL;
+    int x;
+    cout<<"Enter the number of family members: ";
+    cin>>x;
+    int i=1;
+    while(i<=x){
+    // s used to store name of family member and a for age
+        string s;
+        int a;
+        cout<<"Enter name "<<i<<" : " ;
+        cin>>s;
+        cout<<"Enter the age: ";
+        cin>>a;
+        Node* current = new Node(s,a);
+        pushBack(head,current);
+        i++;
+    }
+    printFam(head);
+    return 0;
+}
