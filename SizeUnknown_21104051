@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Create a class which reads the array.
+class Reader{
+private:
+    vector<int> inarr; // inarr means input array.
+public:
+    Reader(vector<int> &inarr){
+        this->inarr = inarr;
+    }
+    // Make a function which returns the element at index i.
+    int get(int i){
+        return inarr[i];
+    }
+};
+
+// Create a class Answer which searches for the element and returns the index.
+class Answer {
+public:
+    int binarySearch(Reader& read, int key){
+
+        int high = 1;
+        int low = 0;
+        while(read.get(high) < key){
+            low = high;
+            high = high << 1; // Left-Shift high by 1 bit.
+        }
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int x = read.get(mid); // Gets ths element at index mid.
+            if (x == key)
+                return mid;
+            if (x > key){
+                high = mid - 1;
+            } else
+                low = mid + 1;
+        }
+        return -1;
+    }
+};
+
+// Writing main function.
+int main(){
+    
+    Answer ans;
+    int n;
+    int key;
+
+    cout<<"Enter number of elements:";
+    cin>>n;
+    
+    cout<<"Enter the elements of array \n";
+    vector<int> vec(n);
+    for(int i =0; i<n; i++){
+        cin>>vec[i];
+    }
+    
+    cout<<"Enter the number to find in array:";
+    cin>>key;
+
+    Reader read(vec); // Used to read the array.
+    cout<<(ans.binarySearch(read, key))<<endl; // Outputs the index.
+}
